@@ -2,6 +2,8 @@
 #include <vector>
 #include <algorithm>
 #include <chrono>
+#include <random>
+#include <ctime>
 using namespace std;
 
 struct sequences {
@@ -107,10 +109,87 @@ void solve(vector<vector<string>>& arr, int& buffer_size, vector<sequences>& seq
     auto end_time = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::milliseconds>(end_time - start_time);
 
+    cout << "Reward: " << max_reward << endl;
     cout << "Best combination: ";
     print_vector(optimal);
-    cout << "Reward: " << max_reward << endl;
 
     cout << "Execution time: " << duration.count() << " milliseconds" << endl;
 
+}
+
+// Fungsi untuk menghasilkan matriks secara acak
+vector<vector<string>> generate_random_matrix(int matrix_width, int matrix_height, int num_token, vector<string> tokens) {
+
+    // Shuffle tokens randomly
+    srand(time(0)); // Use current time as seed
+    random_shuffle(tokens.begin(), tokens.end());
+
+    // Fill matrix with random tokens
+    vector<vector<string>> matrix(matrix_height, vector<string>(matrix_width));
+    int token_index = 0;
+    for (int i = 0; i < matrix_height; ++i) {
+        for (int j = 0; j < matrix_width; ++j) {
+            matrix[i][j] = tokens[token_index];
+            ++token_index;
+            if (token_index == num_token) {
+                // Reset token index and shuffle tokens again
+                token_index = 0;
+                random_shuffle(tokens.begin(), tokens.end());
+            }
+        }
+    }
+
+    return matrix;
+}
+
+
+// Fungsi untuk menghasilkan sekuens secara acak
+vector<sequences> generate_random_sequences(int num_sequence, int max_sequence_length, vector<string> tokens, mt19937& g) {
+    vector<sequences> random_sequences;
+
+    // Buat distribusi untuk panjang sekuens dan hadiah
+    uniform_int_distribution<int> num_tokens_distribution(1, max_sequence_length);
+    uniform_int_distribution<int> reward_distribution(10, 50);
+
+    for (int i = 0; i < num_sequence; ++i) {
+        // Acak urutan token
+        shuffle(tokens.begin(), tokens.end(), g);
+
+        // Buat objek sekuens
+        sequences seq;
+        int seq_length = num_tokens_distribution(g);
+
+        // Ambil token secara berurutan dari vektor tokens
+        for (int j = 0; j < seq_length; ++j) {
+            seq.token.push_back(tokens[j]);
+        }
+
+        // Tentukan hadiah secara acak
+        seq.reward = reward_distribution(g);
+
+        // Tambahkan sekuens ke dalam vektor random_sequences
+        random_sequences.emplace_back(seq);
+    }
+
+    return random_sequences;
+}
+
+// Fungsi untuk mencetak matriks
+void print_matrix(const vector<vector<string>>& matrix) {
+    cout << "Matriks:" << endl;
+    for (const auto& row : matrix) {
+        for (const string& cell : row) {
+            cout << cell << " ";
+        }
+        cout << endl;
+    }
+}
+
+// Function to print a vector of sequences
+void print_sequences(const vector<sequences>& seq) {
+    for (const sequences& s : seq) {
+        cout << "Sequence: ";
+        print_vector(s.token);
+        cout << "Reward: " << s.reward << endl;
+    }
 }
