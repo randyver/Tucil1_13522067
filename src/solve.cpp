@@ -19,6 +19,20 @@ void print_vector(vector<string> v) {
     cout << endl;
 }
 
+// Function to convert vector of coordinates to string
+string coordinates_to_string(const vector<pair<int, int>>& coordinates) {
+    ostringstream oss;  // Creating an output string stream
+
+    oss << "Koordinat: ";
+    for(int i = 0; i < coordinates.size(); i++){
+        oss << "(" << coordinates[i].second + 1 << ", " << coordinates[i].first + 1 << ") ";
+        
+    }
+
+    return oss.str();  // Convert the stream to a string and return
+}
+
+
 bool contains_sequence(const vector<string>& v, const sequences& s) {
     for (size_t i = 0; i <= v.size() - s.token.size(); ++i) {
         auto it = search(v.begin() + i, v.end(), s.token.begin(), s.token.end());
@@ -42,38 +56,33 @@ int calculate_reward(vector<string>& v, vector<sequences>& seq) {
 }
 
 // Fungsi untuk menghasilkan semua kemungkinan kombinasi token yang memenuhi aturan permainan
-void generate_combinations(vector<vector<string>>& arr, int& buffer_size, vector<sequences>& seq, vector<string>& temp, vector<string>& optimal, int row, int col, int dir, int& max_reward) {
+void generate_combinations(vector<vector<string>>& arr, int& buffer_size, vector<sequences>& seq, vector<string>& temp, vector<string>& optimal, vector<pair<int, int>>& optimal_coord, vector<vector<bool>>& taken,int row, int col, int dir, int& max_reward) {
 
-    static vector<vector<bool>> taken(arr.size(), vector<bool>(arr[0].size(), false));
+
+    temp.push_back(arr[row][col]);
+    taken[row][col] = true;
+    optimal_coord.push_back(make_pair(row, col));
 
     if (temp.size() < buffer_size){
-        if (taken[row][col]) {
-            return;
-        }
-        temp.push_back(arr[row][col]);
-        taken[row][col] = true;
 
-        // Ubah arah gerak sesuai dengan aturan permainan
         dir = 1 - dir;
         // Jika horizontal, coba semua kemungkinan kolom di baris yang sama
         if (dir == 0) {
             for (int j = 0; j < arr[0].size(); j++) {
-                if (j != col) {
-                    generate_combinations(arr, buffer_size, seq, temp, optimal, row, j, dir, max_reward);
+                if (j != col && !taken[row][j]) {
+                    generate_combinations(arr, buffer_size, seq, temp, optimal, optimal_coord, taken, row, j, dir, max_reward);
                 }
             }
         }
         // Jika vertikal, coba semua kemungkinan baris di kolom yang sama
         if (dir == 1) {
             for (int i = 0; i < arr.size(); i++) {
-                if (i != row) {
-                    generate_combinations(arr, buffer_size, seq, temp, optimal, i, col, dir, max_reward);
+                if (i != row && !taken[i][col]) {
+                    generate_combinations(arr, buffer_size, seq, temp, optimal, optimal_coord, taken, i, col, dir, max_reward);
                 }
             }
         }
 
-        temp.pop_back();
-        taken[row][col] = false;
     }
 
     // Jika size temp udah maksimal
@@ -89,31 +98,45 @@ void generate_combinations(vector<vector<string>>& arr, int& buffer_size, vector
             if(calculate_reward(temp, seq) > max_reward){
                 max_reward = calculate_reward(temp, seq);
                 optimal = temp;
+                string s = coordinates_to_string(optimal_coord);
+                cout << s << endl;
             }
         }
-        return;
+
     }
+
+    temp.pop_back();
+    taken[row][col] = false;
+    optimal_coord.pop_back();
 
 }
 
-void solve(vector<vector<string>>& arr, int& buffer_size, vector<sequences>& seq, vector<string>& temp, vector<string>& optimal, int matrix_width){
-    int max_reward = 0;
+
+void solve(vector<vector<string>>& arr, int& buffer_size, vector<sequences>& seq, vector<string>& temp, vector<string>& optimal, vector<pair<int, int>>& optimal_coord, int matrix_width){
+    int max_reward = -9999;
+    vector<vector<bool>> taken(arr.size(), vector<bool>(arr[0].size(), false));
 
     auto start_time = chrono::high_resolution_clock::now();
 
     // mulai dari baris pertama
     for (int j = 0; j < matrix_width; j++) {
-        generate_combinations(arr, buffer_size, seq, temp, optimal, 0, j, 0, max_reward);
+        generate_combinations(arr, buffer_size, seq, temp, optimal, optimal_coord, taken, 0, j, 0, max_reward);
     }
     
     auto end_time = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::milliseconds>(end_time - start_time);
 
-    cout << "Reward: " << max_reward << endl;
-    cout << "Best combination: ";
-    print_vector(optimal);
+    if(optimal.size() != 0){
+        cout << "Reward: " << max_reward << endl;
+        cout << "Solusi optimal: ";
+        print_vector(optimal);
+        
+    }
+    else{
+        cout << "Tidak ada solusi yang memenuhi" << endl;
+    }
 
-    cout << "Execution time: " << duration.count() << " milliseconds" << endl;
+    cout << "Waktu eksekusi: " << duration.count() << " milliseconds" << endl;
 
 }
 

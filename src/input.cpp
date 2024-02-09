@@ -52,7 +52,9 @@ void input_file() {
 
     cout << "--------------------------------- SOLUSI OPTIMAL --------------------------------" << endl;
     vector<string> temp, optimal;
-    solve(arr, buffer_size, seq, temp, optimal, matrix_width);
+    vector<pair<int, int>> optimal_coord;
+    vector<vector<bool>> taken;
+    solve(arr, buffer_size, seq, temp, optimal, optimal_coord, matrix_width);
 }
 
 void input_automatic(){
@@ -87,6 +89,8 @@ void input_automatic(){
     
     cout << "--------------------------------- SOLUSI OPTIMAL --------------------------------" << endl;
     vector<string> temp, optimal;
-    solve(arr, buffer_size, seq, temp, optimal, matrix_width);
+    vector<pair<int, int>> optimal_coord;
+    vector<vector<bool>> taken;
+    solve(arr, buffer_size, seq, temp, optimal, optimal_coord, matrix_width);
     
 }
