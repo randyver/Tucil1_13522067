@@ -20,9 +20,9 @@ void print_vector(vector<string> v) {
 }
 
 void print_coordinates(vector<pair<int, int>>& coordinates) {
-    cout << "Koordinat path: ";
+    cout << "Koordinat: " << endl;
     for (const auto& coord : coordinates) {
-        cout << "(" << coord.second + 1 << ", " << coord.first + 1 << ") ";
+        cout << "(" << coord.second + 1 << ", " << coord.first + 1 << ") " << endl;
     }
     cout << endl;
 }
@@ -119,17 +119,16 @@ void solve(vector<vector<string>>& arr, int& buffer_size, vector<sequences>& seq
     auto duration = chrono::duration_cast<chrono::milliseconds>(end_time - start_time);
 
     if(optimal.size() != 0){
-        cout << "Reward: " << max_reward << endl;
-        cout << "Solusi optimal: ";
+        cout << "Reward terbesar: " << max_reward << endl;
+        cout << "Buffer: ";
         print_vector(optimal);
-        cout << optimal_coord.size() << endl;
         print_coordinates(optimal_coord);
     }
     else{
-        cout << "Tidak ada solusi yang memenuhi" << endl;
+        cout << "Tidak ada solusi yang memenuhi." << endl;
     }
 
-    cout << "Waktu eksekusi: " << duration.count() << "ms" << endl;
+    cout << "Waktu eksekusi: " << duration.count() << " ms" << endl;
 
 }
 
@@ -164,7 +163,7 @@ vector<sequences> generate_random_sequences(int num_sequence, int max_sequence_l
     vector<sequences> random_sequences;
 
     // Buat distribusi untuk panjang sekuens dan hadiah
-    uniform_int_distribution<int> num_tokens_distribution(1, max_sequence_length);
+    uniform_int_distribution<int> num_tokens_distribution(2, max_sequence_length);
     uniform_int_distribution<int> reward_distribution(10, 50);
 
     for (int i = 0; i < num_sequence; ++i) {
@@ -203,9 +202,9 @@ void print_matrix(const vector<vector<string>>& matrix) {
 
 // Function to print a vector of sequences
 void print_sequences(const vector<sequences>& seq) {
+    cout << "Sequence dan reward: " << endl;
     for (const sequences& s : seq) {
-        cout << "Sequence: ";
         print_vector(s.token);
-        cout << "Reward: " << s.reward << endl;
+        cout << s.reward << endl;
     }
 }
