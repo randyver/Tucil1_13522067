@@ -104,8 +104,8 @@ void generate_combinations(vector<vector<string>>& arr, int& buffer_size, vector
 }
 
 
-void solve(vector<vector<string>>& arr, int& buffer_size, vector<sequences>& seq, vector<string>& temp, vector<string>& optimal, vector<pair<int, int>>& optimal_coord, vector<pair<int, int>>& current_coord, int matrix_width){
-    int max_reward = -9999;
+void solve(vector<vector<string>>& arr, int& buffer_size, vector<sequences>& seq, vector<string>& temp, vector<string>& optimal, vector<pair<int, int>>& optimal_coord, vector<pair<int, int>>& current_coord, int matrix_width, int& max_reward, int& time){
+    max_reward = -9999;
     vector<vector<bool>> taken(arr.size(), vector<bool>(arr[0].size(), false));
 
     auto start_time = chrono::high_resolution_clock::now();
@@ -117,18 +117,8 @@ void solve(vector<vector<string>>& arr, int& buffer_size, vector<sequences>& seq
     
     auto end_time = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::milliseconds>(end_time - start_time);
+    time = duration.count();
 
-    if(optimal.size() != 0){
-        cout << "Reward terbesar: " << max_reward << endl;
-        cout << "Buffer: ";
-        print_vector(optimal);
-        print_coordinates(optimal_coord);
-    }
-    else{
-        cout << "Tidak ada solusi yang memenuhi." << endl;
-    }
-
-    cout << "Waktu eksekusi: " << duration.count() << " ms" << endl;
 
 }
 

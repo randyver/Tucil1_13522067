@@ -26,10 +26,10 @@ int main() {
             input_automatic();
         }
 
-        cout << "Apakah Anda ingin melanjutkan? (ya/tidak): ";
+        cout << "Apakah Anda ingin melanjutkan permainan? (y/n): ";
         cin >> continueChoice;
 
-    } while (continueChoice == "ya");
+    } while (continueChoice == "y");
 
     return 0;
 }

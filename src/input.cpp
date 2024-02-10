@@ -4,20 +4,80 @@
 #include "solve.cpp"
 using namespace std;
 
-void output(){
-    
+void print_solution(vector<vector<string>>& arr, int buffer_size, vector<sequences>& seq, int matrix_width) {
+    cout << "--------------------------------- SOLUSI OPTIMAL --------------------------------" << endl;
+    vector<string> temp, optimal;
+    vector<pair<int, int>> optimal_coord, current_cord;
+    vector<vector<bool>> taken;
+    int time, max_reward;
+
+    solve(arr, buffer_size, seq, temp, optimal, optimal_coord, current_cord, matrix_width, max_reward, time);
+
+    if(optimal.size() != 0){
+        cout << "Reward terbesar: " << max_reward << endl;
+        cout << "Buffer: ";
+        print_vector(optimal);
+        print_coordinates(optimal_coord);
+    }
+    else{
+        cout << "Tidak ada solusi yang memenuhi." << endl;
+    }
+
+    cout << "Waktu eksekusi: " << time << " ms" << endl;
+    cout << "---------------------------------------------------------------------------------" << endl;
+
+    string s;
+    cout << "Apakah Anda ingin menyimpan solusi? (y/n): ";
+    cin >> s;
+    if(s == "y"){
+        string outputFileName;
+        cout << "Masukkan nama file untuk menyimpan solusi: ";
+        cin >> outputFileName;
+
+        ofstream outputFile(outputFileName);
+        if (!outputFile.is_open()) {
+            cerr << "Tidak dapat membuat file." << endl;
+            return;
+        }
+        outputFile << "--------------------------------- SOLUSI OPTIMAL --------------------------------" << endl;
+        if(optimal.size() != 0){
+            outputFile << "Reward terbesar: " << max_reward << endl;
+            outputFile << "Buffer: ";
+            for (string s : optimal) {
+                outputFile << s << " ";
+            }
+            outputFile << endl;
+            outputFile << "Koordinat: " << endl;
+            for (const auto& coord : optimal_coord) {
+                outputFile << "(" << coord.second + 1 << ", " << coord.first + 1 << ") " << endl;
+            }
+            outputFile << endl;
+        }
+        else{
+            outputFile << "Tidak ada solusi yang memenuhi." << endl;
+        }
+
+        outputFile << "Waktu eksekusi: " << time << " ms" << endl;
+        outputFile << "---------------------------------------------------------------------------------" << endl;
+
+        outputFile.close();
+        cout << "Penyimpanan berhasil!" << endl;
+    }
 }
 
 void input_file() {
     string filename;
-    cout << "Masukkan nama file: ";
-    cin >> filename;
+    ifstream inputFile;
 
-    ifstream inputFile(filename);
-    if (!inputFile.is_open()) {
-        cerr << "File not found." << endl;
-        return;
-    }
+    do {
+        cout << "Masukkan nama file: ";
+        cin >> filename;
+        inputFile.open(filename);
+
+        if (!inputFile.is_open()) {
+            cerr << "File tidak ditemukan." << endl;
+        }
+    } while (!inputFile.is_open());
 
     int buffer_size;
     int matrix_width, matrix_height;
@@ -54,11 +114,7 @@ void input_file() {
         inputFile.ignore();
     }
 
-    cout << "--------------------------------- SOLUSI OPTIMAL --------------------------------" << endl;
-    vector<string> temp, optimal;
-    vector<pair<int, int>> optimal_coord, current_cord;
-    vector<vector<bool>> taken;
-    solve(arr, buffer_size, seq, temp, optimal, optimal_coord, current_cord, matrix_width);
+    print_solution(arr, buffer_size, seq, matrix_width);
 }
 
 void input_automatic(){
@@ -79,8 +135,8 @@ void input_automatic(){
     }
     cout << "Ukuran buffer: ";
     cin >> buffer_size;
-    cout << "Ukuran matriks (baris, kolom): ";
-    cin >> matrix_height >> matrix_width;
+    cout << "Ukuran matriks (kolom, baris): ";
+    cin >> matrix_width >> matrix_height;
     cout << "Jumlah sekuens: ";
     cin >> num_sequence;
     cout << "Ukuran maksimal sekuens: ";
@@ -91,10 +147,6 @@ void input_automatic(){
     print_matrix(arr);
     print_sequences(seq);
     
-    cout << "--------------------------------- SOLUSI OPTIMAL --------------------------------" << endl;
-    vector<string> temp, optimal;
-    vector<pair<int, int>> optimal_coord, current_cord;
-    vector<vector<bool>> taken;
-    solve(arr, buffer_size, seq, temp, optimal, optimal_coord, current_cord, matrix_width);
+    print_solution(arr, buffer_size, seq, matrix_width);
     
 }
