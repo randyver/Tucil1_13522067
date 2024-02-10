@@ -4,6 +4,10 @@
 #include "solve.cpp"
 using namespace std;
 
+void output(){
+    
+}
+
 void input_file() {
     string filename;
     cout << "Masukkan nama file: ";
@@ -52,9 +56,9 @@ void input_file() {
 
     cout << "--------------------------------- SOLUSI OPTIMAL --------------------------------" << endl;
     vector<string> temp, optimal;
-    vector<pair<int, int>> optimal_coord;
+    vector<pair<int, int>> optimal_coord, current_cord;
     vector<vector<bool>> taken;
-    solve(arr, buffer_size, seq, temp, optimal, optimal_coord, matrix_width);
+    solve(arr, buffer_size, seq, temp, optimal, optimal_coord, current_cord, matrix_width);
 }
 
 void input_automatic(){
@@ -89,8 +93,8 @@ void input_automatic(){
     
     cout << "--------------------------------- SOLUSI OPTIMAL --------------------------------" << endl;
     vector<string> temp, optimal;
-    vector<pair<int, int>> optimal_coord;
+    vector<pair<int, int>> optimal_coord, current_cord;
     vector<vector<bool>> taken;
-    solve(arr, buffer_size, seq, temp, optimal, optimal_coord, matrix_width);
+    solve(arr, buffer_size, seq, temp, optimal, optimal_coord, current_cord, matrix_width);
     
 }
