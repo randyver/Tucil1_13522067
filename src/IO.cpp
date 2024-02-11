@@ -41,17 +41,14 @@ void print_solution(vector<vector<string>>& arr, int buffer_size, vector<sequenc
             cerr << "Tidak dapat membuat file." << endl;
             return;
         }
-        outputFile << endl << "--------------------------------- SOLUSI OPTIMAL --------------------------------" << endl;
         if(optimal.size() != 0){
-            outputFile << "Reward terbesar: " << max_reward << endl;
-            outputFile << "Buffer: ";
+            outputFile << max_reward << endl;
             for (string s : optimal) {
                 outputFile << s << " ";
             }
             outputFile << endl;
-            outputFile << "Koordinat: " << endl;
             for (const auto& coord : optimal_coord) {
-                outputFile << "(" << coord.second + 1 << ", " << coord.first + 1 << ") " << endl;
+                outputFile << coord.second + 1 << ", " << coord.first + 1 << endl;
             }
             outputFile << endl;
         }
@@ -59,8 +56,7 @@ void print_solution(vector<vector<string>>& arr, int buffer_size, vector<sequenc
             outputFile << "Tidak ada solusi yang memenuhi." << endl;
         }
 
-        outputFile << "Waktu eksekusi: " << time << " ms" << endl;
-        outputFile << "---------------------------------------------------------------------------------" << endl;
+        outputFile << time << " ms";
 
         outputFile.close();
         cout << "Penyimpanan berhasil!" << endl;

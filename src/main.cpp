@@ -1,5 +1,5 @@
 #include <iostream>
-#include "input.cpp"
+#include "IO.cpp"
 using namespace std;
 
 int main() {

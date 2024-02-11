@@ -1,0 +1,15 @@
+10
+8 4
+B F A D E C C A
+E B F D B F D C
+A E B E D C F A
+F D C E B A F A
+4
+E E A D D
+23
+C F
+38
+A B B A C
+29
+A F
+16
