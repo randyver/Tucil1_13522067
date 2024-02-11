@@ -53,7 +53,7 @@ void print_solution(vector<vector<string>>& arr, int buffer_size, vector<sequenc
             outputFile << endl;
         }
         else{
-            outputFile << "Tidak ada solusi yang memenuhi." << endl;
+            outputFile << "Tidak ada solusi yang memenuhi." << endl << endl;
         }
 
         outputFile << time << " ms";
