@@ -6,9 +6,9 @@ A E B E D C F A
 F D C E B A F A
 4
 E E A D D
-23
+-23
 C F
-38
+-38
 A B B A C
 29
 A F

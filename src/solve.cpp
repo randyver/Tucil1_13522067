@@ -28,11 +28,14 @@ void print_coordinates(vector<pair<int, int>>& coordinates) {
 }
 
 bool contains_sequence(const vector<string>& v, const sequences& s) {
-    for (size_t i = 0; i <= v.size() - s.token.size(); ++i) {
-        auto it = search(v.begin() + i, v.end(), s.token.begin(), s.token.end());
-        if (it != v.end()) {
-            return true;
+    if(v.size() >= s.token.size()){
+        for (size_t i = 0; i <= v.size() - s.token.size(); ++i) {
+            auto it = search(v.begin() + i, v.end(), s.token.begin(), s.token.end());
+            if (it != v.end()) {
+                return true;
+            }
         }
+        return false;
     }
     return false;
 }
@@ -105,7 +108,7 @@ void generate_combinations(vector<vector<string>>& arr, int& buffer_size, vector
 
 
 void solve(vector<vector<string>>& arr, int& buffer_size, vector<sequences>& seq, vector<string>& temp, vector<string>& optimal, vector<pair<int, int>>& optimal_coord, vector<pair<int, int>>& current_coord, int matrix_width, int& max_reward, int& time){
-    max_reward = -9999;
+    max_reward = 0;
     vector<vector<bool>> taken(arr.size(), vector<bool>(arr[0].size(), false));
 
     auto start_time = chrono::high_resolution_clock::now();
