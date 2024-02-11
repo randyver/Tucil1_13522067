@@ -1,5 +1,5 @@
 --------------------------------- SOLUSI OPTIMAL --------------------------------
-Reward terbesar: 11
+Reward terbesar: 50
 Buffer: 7A BD 7A BD 1C BD 55 
 Koordinat: 
 (1, 1) 
@@ -10,5 +10,5 @@ Koordinat:
 (6, 3) 
 (1, 3) 
 
-Waktu eksekusi: 462 ms
+Waktu eksekusi: 463 ms
 ---------------------------------------------------------------------------------

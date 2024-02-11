@@ -5,7 +5,7 @@
 using namespace std;
 
 void print_solution(vector<vector<string>>& arr, int buffer_size, vector<sequences>& seq, int matrix_width) {
-    cout << "--------------------------------- SOLUSI OPTIMAL --------------------------------" << endl;
+    cout << endl << "--------------------------------- SOLUSI OPTIMAL --------------------------------" << endl;
     vector<string> temp, optimal;
     vector<pair<int, int>> optimal_coord, current_cord;
     vector<vector<bool>> taken;
@@ -27,19 +27,21 @@ void print_solution(vector<vector<string>>& arr, int buffer_size, vector<sequenc
     cout << "---------------------------------------------------------------------------------" << endl;
 
     string s;
-    cout << "Apakah Anda ingin menyimpan solusi? (y/n): ";
+    cout << endl << "Apakah Anda ingin menyimpan solusi? (y/n): ";
     cin >> s;
     if(s == "y"){
         string outputFileName;
         cout << "Masukkan nama file untuk menyimpan solusi: ";
         cin >> outputFileName;
 
-        ofstream outputFile(outputFileName);
+        string filePath = "../test/output/" + outputFileName;
+
+        ofstream outputFile(filePath);
         if (!outputFile.is_open()) {
             cerr << "Tidak dapat membuat file." << endl;
             return;
         }
-        outputFile << "--------------------------------- SOLUSI OPTIMAL --------------------------------" << endl;
+        outputFile << endl << "--------------------------------- SOLUSI OPTIMAL --------------------------------" << endl;
         if(optimal.size() != 0){
             outputFile << "Reward terbesar: " << max_reward << endl;
             outputFile << "Buffer: ";
@@ -70,9 +72,12 @@ void input_file() {
     ifstream inputFile;
 
     do {
-        cout << "Masukkan nama file: ";
+        cout << "Masukkan nama file yang ingin dibaca: ";
         cin >> filename;
-        inputFile.open(filename);
+
+        string filePath = "../test/input/" + filename;
+
+        inputFile.open(filePath);
 
         if (!inputFile.is_open()) {
             cerr << "File tidak ditemukan." << endl;

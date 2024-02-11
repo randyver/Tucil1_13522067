@@ -125,11 +125,9 @@ void solve(vector<vector<string>>& arr, int& buffer_size, vector<sequences>& seq
 // Fungsi untuk menghasilkan matriks secara acak
 vector<vector<string>> generate_random_matrix(int matrix_width, int matrix_height, int num_token, vector<string> tokens) {
 
-    // Shuffle tokens randomly
-    srand(time(0)); // Use current time as seed
+    srand(time(0));
     random_shuffle(tokens.begin(), tokens.end());
 
-    // Fill matrix with random tokens
     vector<vector<string>> matrix(matrix_height, vector<string>(matrix_width));
     int token_index = 0;
     for (int i = 0; i < matrix_height; ++i) {
@@ -137,7 +135,6 @@ vector<vector<string>> generate_random_matrix(int matrix_width, int matrix_heigh
             matrix[i][j] = tokens[token_index];
             ++token_index;
             if (token_index == num_token) {
-                // Reset token index and shuffle tokens again
                 token_index = 0;
                 random_shuffle(tokens.begin(), tokens.end());
             }
@@ -148,36 +145,31 @@ vector<vector<string>> generate_random_matrix(int matrix_width, int matrix_heigh
 }
 
 
-// Fungsi untuk menghasilkan sekuens secara acak
 vector<sequences> generate_random_sequences(int num_sequence, int max_sequence_length, vector<string> tokens, mt19937& g) {
     vector<sequences> random_sequences;
 
     // Buat distribusi untuk panjang sekuens dan hadiah
     uniform_int_distribution<int> num_tokens_distribution(2, max_sequence_length);
     uniform_int_distribution<int> reward_distribution(10, 50);
+    uniform_int_distribution<int> token_distribution(0, tokens.size() - 1);
 
     for (int i = 0; i < num_sequence; ++i) {
-        // Acak urutan token
-        shuffle(tokens.begin(), tokens.end(), g);
-
-        // Buat objek sekuens
         sequences seq;
         int seq_length = num_tokens_distribution(g);
 
-        // Ambil token secara berurutan dari vektor tokens
+        // Ambil token secara acak dari vektor tokens
         for (int j = 0; j < seq_length; ++j) {
-            seq.token.push_back(tokens[j]);
+            int token_index = token_distribution(g);
+            seq.token.push_back(tokens[token_index]);
         }
 
-        // Tentukan hadiah secara acak
         seq.reward = reward_distribution(g);
-
-        // Tambahkan sekuens ke dalam vektor random_sequences
         random_sequences.emplace_back(seq);
     }
 
     return random_sequences;
 }
+
 
 // Fungsi untuk mencetak matriks
 void print_matrix(const vector<vector<string>>& matrix) {
@@ -190,7 +182,7 @@ void print_matrix(const vector<vector<string>>& matrix) {
     }
 }
 
-// Function to print a vector of sequences
+// Fungsi untuk mencetak sequence
 void print_sequences(const vector<sequences>& seq) {
     cout << "Sequence dan reward: " << endl;
     for (const sequences& s : seq) {
