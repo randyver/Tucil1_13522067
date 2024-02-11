@@ -1,6 +1,4 @@
-# Tucil1_13522067
-# Cyberpunk 2077 Breach Protocol Solver
-# Tugas Kecil 1 Strategi Algoritma 2023/2024
+# Cyberpunk 2077 Breach Protocol Solver (Tugas Kecil 1 Strategi Algoritma 2023/2024)
 
 ## Deskripsi
 Breach Protocol adalah minigame meretas dalam permainan video Cyberpunk 2077. Ini melibatkan pemilihan token alfanumerik dari matriks untuk mencocokkan sekuens tertentu dalam buffer. Pemain bergerak dalam pola bergantian antara horizontal dan vertikal di matriks, memulai dari baris paling atas. Token dalam buffer dapat digunakan untuk lebih dari satu sekuens, dan setiap sekuens memiliki bobot hadiah yang berbeda. Permainan berlanjut sampai semua sekuens dicocokkan atau buffer penuh. Repository ini adalah penyelesaian breach protocol dengan algoritma brute force.
