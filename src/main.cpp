@@ -6,7 +6,7 @@ int main() {
     cout << "---------------------------------------------------------------------------------" << endl;
     cout << "                      Cyberpunk 2077 Breach Protocol Solver                    " << endl;
     cout << "---------------------------------------------------------------------------------" << endl;
-    int choice;
+    string choice;
     string continueChoice;
 
     do {
@@ -16,13 +16,13 @@ int main() {
         cout << "Masukkan menu yang Anda pilih: ";
         cin >> choice;
 
-        while (!(choice == 1 || choice == 2)) {
+        while (!(choice == "1" || choice == "2")) {
             cout << "Pilihan tidak valid!" << endl;
             cout << "Masukkan menu yang Anda pilih: ";
             cin >> choice;
         }
 
-        if (choice == 1) {
+        if (choice == "1") {
             input_file();
         } else {
             input_automatic();
