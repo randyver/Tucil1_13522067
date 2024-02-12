@@ -11,6 +11,10 @@ struct sequences {
     int reward;
 };
 
+bool is_two_char(string str) {
+    return str.length() == 2;
+}
+
 // Fungsi untuk mencetak vektor string
 void print_vector(vector<string> v) {
     for (string s : v) {

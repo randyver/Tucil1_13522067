@@ -128,20 +128,53 @@ void input_automatic(){
     cout << "Matriks dan sekuens permainan akan dibuat otomatis oleh program." << endl;
     cout << "Jumlah token unik: ";
     cin >> num_token;
-    cout << "Token: ";
-    for(int i = 0; i < num_token; i++){
-        string token;
-        cin >> token;
-        tokens.push_back(token);
-    }
+    bool is_valid_token = true;
+    do{
+        is_valid_token = true;
+        cout << "Token: ";
+        for(int i = 0; i < num_token; i++){
+            string token;
+            cin >> token;
+            if(!is_two_char(token)){
+                is_valid_token = false;
+            }
+            else{
+                tokens.push_back(token);
+            }
+        }
+        if(!is_valid_token){
+            cout << "Token tidak valid, harus terdiri dari 2 karakter." << endl;
+            tokens.clear();
+        }
+    } while(!is_valid_token);
+    
     cout << "Ukuran buffer: ";
     cin >> buffer_size;
+    while (buffer_size <= 0) {
+        cout << "Ukuran buffer harus lebih besar dari 0. Silakan input kembali: ";
+        cin >> buffer_size;
+    }
+
     cout << "Ukuran matriks (kolom, baris): ";
     cin >> matrix_width >> matrix_height;
+    while (matrix_width <= 0 || matrix_height <= 0) {
+        cout << "Ukuran matriks harus lebih besar dari 0. Silakan input kembali: ";
+        cin >> matrix_width >> matrix_height;
+    }
+
     cout << "Jumlah sekuens: ";
     cin >> num_sequence;
+    while (num_sequence <= 0) {
+        cout << "Jumlah sekuens harus lebih besar dari 0. Silakan input kembali: ";
+        cin >> num_sequence;
+    }
+
     cout << "Ukuran maksimal sekuens: ";
     cin >> max_sequence_length;
+    while (max_sequence_length <= 1) {
+        cout << "Ukuran maksimal sekuens harus lebih besar dari 1. Silakan input kembali: ";
+        cin >> max_sequence_length;
+    }
 
     seq = generate_random_sequences(num_sequence, max_sequence_length, tokens, g);
     arr = generate_random_matrix(matrix_width, matrix_height, num_token, tokens);
