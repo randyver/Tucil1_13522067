@@ -66,6 +66,8 @@ void print_solution(vector<vector<string>>& arr, int buffer_size, vector<sequenc
 void input_file() {
     string filename;
     ifstream inputFile;
+    bool is_valid_token = true;
+    bool is_valid_buffer_size = true;
 
     do {
         cout << "Masukkan nama file yang ingin dibaca: ";
@@ -83,6 +85,9 @@ void input_file() {
     int buffer_size;
     int matrix_width, matrix_height;
     inputFile >> buffer_size;
+    if(buffer_size <= 0){
+        is_valid_buffer_size = false;
+    }
     inputFile >> matrix_width >> matrix_height;
 
     vector<vector<string>> arr(matrix_height, vector<string>(matrix_width));
@@ -90,6 +95,9 @@ void input_file() {
     for (int i = 0; i < matrix_height; i++) {
         for (int j = 0; j < matrix_width; j++) {
             inputFile >> arr[i][j];
+            if(!is_two_char(arr[i][j])){
+                is_valid_token = false;
+            }
         }
     }
 
@@ -115,7 +123,22 @@ void input_file() {
         inputFile.ignore();
     }
 
-    print_solution(arr, buffer_size, seq, matrix_width);
+    if(!is_valid_token || !is_valid_buffer_size){
+        if(!is_valid_token && is_valid_buffer_size){
+            cout << "Token tidak valid, harus terdiri dari 2 karakter." << endl;
+        }
+        else if(is_valid_token && !is_valid_buffer_size){
+            cout << "Ukuran buffer harus lebih besar dari 0." << endl;
+        }
+        else{
+            cout << "Ada token yang tidak valid, setiap token harus terdiri dari 2 karakter." << endl;
+            cout << "Ukuran buffer harus lebih besar dari 0." << endl;
+        }
+        input_file();
+    }
+    else{
+        print_solution(arr, buffer_size, seq, matrix_width);
+    }
 }
 
 void input_automatic(){
