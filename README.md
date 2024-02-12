@@ -4,7 +4,7 @@
 Breach Protocol adalah minigame meretas dalam permainan video Cyberpunk 2077. Ini melibatkan pemilihan token alfanumerik dari matriks untuk mencocokkan sekuens tertentu dalam buffer. Pemain bergerak dalam pola bergantian antara horizontal dan vertikal di matriks, memulai dari baris paling atas. Token dalam buffer dapat digunakan untuk lebih dari satu sekuens, dan setiap sekuens memiliki bobot hadiah yang berbeda. Permainan berlanjut sampai semua sekuens dicocokkan atau buffer penuh. Repository ini adalah penyelesaian breach protocol dengan algoritma brute force.
 
 ## Requirements
-C++ language
+GNU C++ compiler
 
 ## How to compile
 1. Clone repository ini
